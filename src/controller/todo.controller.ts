@@ -1,7 +1,9 @@
 import type { Request, Response } from "express";
+import fs from "fs";
 
 const todoController = {
-  getAllTodos: (req: Request, res: Response) => {
+  getAllTodos: async (req: Request, res: Response) => {
+    await fs.promises.readFile("todos.json", "utf8");
     res.status(200).json({ message: "Get all todos" });
   },
   createTodo: (req: Request, res: Response) => {
