@@ -1,10 +1,14 @@
+import router from "#router/index.js";
 import express, { type Request, type Response } from "express";
 
 const app = express();
 const port = process.env.PORT || 3000;
 
+app.use(express.json());
+app.use(router);
+
 app.get("/", (req: Request, res: Response) => {
-  res.send("Hello World");
+  res.send("Hello World!");
 });
 
 app.listen(port, () => {
