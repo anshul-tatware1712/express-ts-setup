@@ -1,4 +1,5 @@
 import logger from "#config/logger.js";
+import { connectDB } from "#config/database.js";
 import errorHandler from "#middleware/error.middleware.js";
 import requestLogger from "#middleware/logger.middleware.js";
 
@@ -18,6 +19,11 @@ app.get("/", (req: Request, res: Response) => {
 
 app.use(errorHandler);
 
-app.listen(port, () => {
-  logger.info(`Server is running on http://localhost:${port}`);
-});
+async function startServer(): Promise<void> {
+  await connectDB();
+
+  app.listen(port, () => {
+    logger.info(`Server is running on http://localhost:${port}`);
+  });
+}
+startServer();
