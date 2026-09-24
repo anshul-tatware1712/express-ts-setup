@@ -4,7 +4,6 @@ import { z, ZodError } from "zod";
 
 export const validateSchema = (schema: z.ZodObject<any, any>) => (req: Request, res: Response, next: NextFunction) => {
   try {
-    console.log("Validating request body:", req.body);
     schema.parse(req.body);
     next();
   } catch (error) {
@@ -12,7 +11,7 @@ export const validateSchema = (schema: z.ZodObject<any, any>) => (req: Request, 
       const errorMessages = error.issues.map((issue: any) => ({
         message: `${issue.path.join(".")} is ${issue.message}`,
       }));
-      throw new ValidationError(errorMessages.map((err) => err.message).join(", "));
+      next(new ValidationError(errorMessages.map((err) => err.message).join(", ")));
     } else {
       next(error);
     }

@@ -1,5 +1,6 @@
 import type { Request, Response } from "express";
 import fs from "fs";
+import { NotFoundError } from "#utils/app.errors.js";
 
 const todoController = {
   getAllTodos: async (req: Request, res: Response) => {
@@ -10,7 +11,7 @@ const todoController = {
     res.status(201).json({ message: "Create a new todo" });
   },
   deleteTodo: (req: Request, res: Response) => {
-    res.status(200).json({ message: "Delete a todo" });
+    throw new NotFoundError("Todo not found");
   },
 };
 
